@@ -93,8 +93,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/user/me")
-                        .hasAuthority("ROLE_ADMIN")
                     .antMatchers("/",
                         "/error",
                         "/favicon.ico",

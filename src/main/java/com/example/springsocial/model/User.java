@@ -60,5 +60,7 @@ public class User {
     @JsonIgnoreProperties("users")
     private Collection<Role> roles;
 
-
+    @OneToMany(mappedBy = "author")
+    @JsonIgnoreProperties("author")
+    private Collection<Organisation> organisations;
 }
