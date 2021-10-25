@@ -24,6 +24,9 @@ public class Organisation {
     @Column
     private String email;
 
+    @Lob
+    private String description = "";
+
     @Column
     private boolean confirmed = false;
 
@@ -31,7 +34,26 @@ public class Organisation {
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
 
+    @ManyToMany(mappedBy = "subscribedOrganisations")
+    @JsonIgnoreProperties("subscribedOrganisations")
+    private Collection<User> subscribers;
+
     @OneToMany(mappedBy = "organisation")
     @JsonIgnoreProperties("organisation")
     private Collection<Event> events;
+
+    public boolean addSubscriber(User user) {
+        if (user == null) return false;
+
+        if (this.subscribers.contains(user)) {
+            this.subscribers.remove(user);
+            user.getSubscribedOrganisations().remove(this);
+            return true;
+        }
+
+        this.subscribers.add(user);
+        user.getSubscribedOrganisations().add(this);
+
+        return true;
+    }
 }

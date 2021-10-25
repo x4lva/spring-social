@@ -63,4 +63,14 @@ public class User {
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties("author")
     private Collection<Organisation> organisations;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "users_organisations",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "organisation_id", referencedColumnName = "id"))
+    @JsonIgnoreProperties("subscribes")
+    private Collection<Organisation> subscribedOrganisations;
 }
